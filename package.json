@@ -1,0 +1,8 @@
+{
+  "pythonPackage": {
+  	"dependencies": {
+  		"click": "latest"
+  	}
+  }
+
+}
