@@ -4,21 +4,27 @@ import os
 import sys
 import subprocess
 import json
-
+import types
 
 with open('package.json') as fp:
     data = json.load(fp)
 
+
+
 package = data['pythonPackage']
+
+
 requires = [
     k if v == 'latest' else '%s=%s' % (k, v)
     for k, v in package['dependencies'].items()
 ]
 subprocess.call(['pip', 'install'] + requires)
 
+mod = types.ModuleType(str(package['package']))
+sys.modules[str(package['package'])] = mod
+mod.__path__=['src']
+execfile('src/__init__.py', mod.__dict__)
 
-
-sys.path.insert(0, 'src')
 
 from gumby_elf import main
 main(['develop'])
