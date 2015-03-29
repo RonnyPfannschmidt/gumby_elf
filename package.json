@@ -1,15 +1,17 @@
 {
   "pythonPackage": {
-  	"name": "GumbyElf",
-  	"package": "gumby_elf",
-  	"dependencies": {
-  		"click": "latest",
-  		"setuptools": "latest",
-  		"wheel": "latest"
-  	},
-  	"dependenciesDev": {
-  		"pytest": "latest"
-  	}
+    "name": "GumbyElf",
+    "package": "gumby_elf",
+    "dependencies": {
+      "click": "latest",
+      "setuptools": "latest",
+      "wheel": "latest",
+      "pip": "latest",
+      "flake8": "latest"
+    },
+    "dependenciesDev": {
+      "pytest": "latest",
+      "tox": "latest"
+    }
   }
-
 }
