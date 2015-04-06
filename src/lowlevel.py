@@ -29,7 +29,6 @@ class FileBundle(object):
     def add_file(self, name, data):
         assert not self.finalized
         dirname = os.path.dirname(name)
-        print name, dirname
         if dirname:
             self.needed_folders.add(dirname)
         self.files[name] = data
@@ -67,6 +66,7 @@ def metadata_11(spec):
         'Version: ' + version + '\n',
     ]
     return ''.join(result)
+
 
 def bootstraper(spec):
     fn = os.path.abspath(spec.filename)

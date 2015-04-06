@@ -16,3 +16,4 @@ def main(ctx, specification):
 def develop(obj):
     click.secho("BRAIN HURT", fg='red')
     install_develop_data(obj)
+    click.secho("NO MORE", fg='green')

@@ -18,7 +18,7 @@ requires = [
     k if v == 'latest' else '%s=%s' % (k, v)
     for k, v in package['dependencies'].items()
 ]
-subprocess.check_call(['pip', 'install'] + requires)
+subprocess.check_call(['pip', 'install', '-q', '-U'] + requires)
 
 
 mod = types.ModuleType(str(package['package']))
