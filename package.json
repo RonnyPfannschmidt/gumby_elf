@@ -2,6 +2,11 @@
   "python package": {
     "name": "GumbyElf",
     "package": "gumby_elf",
+    "entrypoints": {
+      "console_scripts": {
+        "gumby_elf": "gumby_elf:main"
+      }
+    },
     "dependencies": {
       "click": "latest",
       "setuptools": "latest",
