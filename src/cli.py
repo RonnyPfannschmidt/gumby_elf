@@ -4,7 +4,8 @@ from .lowlevel import install_develop_data
 
 @click.group()
 @click.pass_context
-@click.option('--specification', click.File('r'), default='package.json')
+@click.option('--specification',
+    type=click.File('r'), default='package.json')
 def main(ctx, specification):
     ctx.obj = Specification(specification)
 

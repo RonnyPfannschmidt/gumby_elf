@@ -11,7 +11,7 @@ with open('package.json') as fp:
 
 
 
-package = data['pythonPackage']
+package = data['python package']
 
 
 requires = [

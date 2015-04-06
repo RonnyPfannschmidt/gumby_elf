@@ -1,10 +1,11 @@
 {
-  "pythonPackage": {
+  "python package": {
     "name": "GumbyElf",
     "package": "gumby_elf",
     "dependencies": {
       "click": "latest",
       "setuptools": "latest",
+      "setuptools_scm": "latest",
       "wheel": "latest",
       "pip": "latest",
       "flake8": "latest"
