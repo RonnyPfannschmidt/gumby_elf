@@ -15,9 +15,11 @@
       "pip": "latest",
       "flake8": "latest"
     },
-    "dependenciesDev": {
-      "pytest": "latest",
-      "tox": "latest"
+    "dependenciesExtra": {
+      "dev": {
+        "pytest": "latest",
+        "tox": "latest"
+      }
     }
   }
 }

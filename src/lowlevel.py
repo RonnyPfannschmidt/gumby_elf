@@ -147,7 +147,7 @@ def install_develop_dependencies(spec):
         for k, v in package['dependencies'].items()
     ] + [
         k if v == 'latest' else '%s=%s' % (k, v)
-        for k, v in package.get('dependenciesDev', {}).items()
+        for k, v in package.get('dependenciesExtra', {}).get('dev', {}).items()
     ]
 
     subprocess.check_call(['pip', 'install', '-q', '-U'] + requires)
