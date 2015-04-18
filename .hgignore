@@ -1,6 +1,6 @@
 syntax: glob
 .env/
 env/
-
+.tox/
 *.pyc
 *.pyo

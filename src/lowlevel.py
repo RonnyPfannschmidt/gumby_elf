@@ -2,7 +2,8 @@ import os
 import sys
 import stat
 import hashlib
-
+import base64
+import subprocess
 import wheel.paths
 
 from setuptools_scm import get_version
@@ -24,15 +25,13 @@ from {module} import {attr}
 
 
 
-import base64
-
-
 def record_hash(data):
     return 'sha1=' + base64.urlsafe_b64encode(hashlib.sha1(data).digest())
 
 
 def script_name(name):
     return os.path.join(PATHS['scripts'], name)
+
 
 def get_script(entrypoint):
     module, attr = entrypoint.split(':')
@@ -137,3 +136,19 @@ def install_develop_data(spec):
 
     bundle.finalize(os.path.join(distinfo_folder, 'RECORD'))
     bundle.to_filesystem()
+
+
+def install_develop_dependencies(spec):
+
+    package = spec.data
+
+    requires = [
+        k if v == 'latest' else '%s=%s' % (k, v)
+        for k, v in package['dependencies'].items()
+    ] + [
+        k if v == 'latest' else '%s=%s' % (k, v)
+        for k, v in package.get('dependenciesDev', {}).items()
+    ]
+
+    subprocess.check_call(['pip', 'install', '-q', '-U'] + requires)
+

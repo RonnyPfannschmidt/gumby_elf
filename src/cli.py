@@ -1,6 +1,6 @@
 import click
 from .config import Specification
-from .lowlevel import install_develop_data
+from .lowlevel import install_develop_data, install_develop_dependencies
 
 @click.group()
 @click.pass_context
@@ -15,5 +15,6 @@ def main(ctx, specification):
 @click.pass_obj
 def develop(obj):
     click.secho("BRAIN HURT", fg='red')
+    install_develop_dependencies(obj)
     install_develop_data(obj)
     click.secho("NO MORE", fg='green')
