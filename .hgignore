@@ -1,6 +1,8 @@
 syntax: glob
 .env/
 env/
+dist/
+build/
 .tox/
 *.pyc
 *.pyo

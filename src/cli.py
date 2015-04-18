@@ -1,6 +1,11 @@
 import click
+import os
 from .config import Specification
-from .lowlevel import install_develop_data, install_develop_dependencies
+from .lowlevel import (
+    install_develop_data,
+    install_extra_requires,
+    get_version,
+)
 
 @click.group()
 @click.pass_context
@@ -8,6 +13,7 @@ from .lowlevel import install_develop_data, install_develop_dependencies
     type=click.File('r'), default='package.json')
 def main(ctx, specification):
     ctx.obj = Specification(specification)
+    ctx.obj.version = get_version()
 
 
 
@@ -15,6 +21,11 @@ def main(ctx, specification):
 @click.pass_obj
 def develop(obj):
     click.secho("BRAIN HURT", fg='red')
-    install_develop_dependencies(obj)
-    install_develop_data(obj)
-    click.secho("NO MORE", fg='green')
+    res = install_develop_data(obj)
+    if not res:
+        re = install_extra_requires(obj, ['dev'])  # XXX
+    if not res:
+        click.secho("NO MORE", fg='green')
+    else:
+        click.secho("MUCH MORE", fg='red')
+    return res
