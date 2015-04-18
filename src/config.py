@@ -1,4 +1,6 @@
 import json
+
+
 class Specification(object):
     def __init__(self, fp):
         self.filename = fp.name

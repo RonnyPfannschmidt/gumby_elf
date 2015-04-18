@@ -1,6 +1,4 @@
 import os
-import sys
-import stat
 import hashlib
 import base64
 import subprocess
@@ -8,6 +6,7 @@ import subprocess
 import zipfile
 
 from setuptools_scm import get_version
+
 
 WHEEL_FMT = './dist/{spec[name]}-{version}-py27.py3-none-any.whl'
 BOOTSTRAP_TEMPLATE = """
@@ -28,6 +27,7 @@ Tag: py27-none-any
 Tag: py3-none-any
 """
 
+
 def record_hash(data):
     return 'sha1=' + base64.urlsafe_b64encode(hashlib.sha1(data).digest())
 
@@ -36,7 +36,6 @@ class WheelBundler(object):
     def __init__(self, path):
         self.archive = zipfile.ZipFile(path, 'w')
         self.record = []
-
 
     def add_file(self, name, data):
         assert getattr(self, 'record', None) is not None
@@ -52,14 +51,15 @@ class WheelBundler(object):
 
 
 def metadata_11(spec):
-    #XXX: better pathhandling
-    #XXX: incomplete
+    # XXX: better pathhandling
+    # XXX: incomplete
     version = get_version()
     result = [
         'Name: $(name)\n' % spec.data,
         'Version: ' + version + '\n',
     ]
     return ''.join(result)
+
 
 def entrypoints_11(spec):
     entrypoints = spec.get('entrypoints', {})
@@ -70,12 +70,11 @@ def entrypoints_11(spec):
     return res
 
 
-
-
 def bootstraper(spec):
     fn = os.path.abspath(spec.filename)
     srcdir = os.path.join(os.path.dirname(fn), 'src')
     return BOOTSTRAP_TEMPLATE.format(srcfolder=srcdir)
+
 
 def install_extra_requires(spec, requested_extras):
     extras = spec.get('dependenciesExtra', {})
@@ -83,6 +82,7 @@ def install_extra_requires(spec, requested_extras):
     for extra in requested_extras:
         required.extend(extras[extra])
     return subprocess.call(['pip', 'install', '-q'] + required)
+
 
 def install_develop_data(spec):
     if not os.path.isdir('dist'):

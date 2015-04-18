@@ -4,7 +4,7 @@
     "package": "gumby_elf",
     "entrypoints": {
       "console_scripts": {
-        "gumby_elf": "gumby_elf:main"
+        "gumby_elf": "gumby_elf.cli:main"
       }
     },
     "dependencies": {
