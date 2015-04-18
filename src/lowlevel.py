@@ -22,11 +22,10 @@ with open(__file__) as fp:
 """
 WHEEL_DEFAULT_META = """\
 Wheel-Version: 1.0
-Generator: gumby_elf
+Generator: gumby_elf pre aplha
 Root-Is-Purelib: true
 Tag: py27-none-any
 Tag: py3-none-any
-Build: 1
 """
 
 def record_hash(data):
