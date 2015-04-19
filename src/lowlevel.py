@@ -51,10 +51,9 @@ class WheelBundler(object):
         self.archive.close()
 
 
-def metadata_11(spec):
+def metadata_11(spec, version):
     # XXX: better pathhandling
     # XXX: incomplete
-    version = get_version()
     result = [
         'Name: $(name)\n' % spec.data,
         'Version: ' + version + '\n',
@@ -103,7 +102,7 @@ def install_develop_data(spec):
 
     bundle.add_file(
         os.path.join(distinfo_folder, 'METADATA'),
-        metadata_11(spec),
+        metadata_11(spec, version),
     )
     bundle.add_file(
         os.path.join(distinfo_folder, 'entry_points.txt'),
