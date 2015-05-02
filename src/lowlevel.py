@@ -6,12 +6,11 @@ import pkgutil
 
 import zipfile
 
-from setuptools_scm import get_version
-
 from .metadata import EntryPoints, WheelInfo
 
 WHEEL_FMT = './dist/{spec[name]}-{version}-py27.py3-none-any.whl'
 DISTINFO_FMT = '{spec[name]}-{version}.dist-info'
+
 
 def record_hash(data):
     return 'sha1=' + base64.urlsafe_b64encode(hashlib.sha1(data).digest())
@@ -48,6 +47,7 @@ def metadata_11(spec, version):
 def entrypoints_11(spec):
     ep = EntryPoints.from_spec_dict(spec)
     return ep.to_11_metadata()
+
 
 def bootstraper(spec):
     fn = os.path.abspath(spec.filename)

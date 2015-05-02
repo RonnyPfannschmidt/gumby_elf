@@ -1,5 +1,6 @@
 from collections import namedtuple
 
+
 class EntryPoint(namedtuple('EntryPoint', 'name entry extras')):
 
     def __str__(self):
@@ -7,7 +8,6 @@ class EntryPoint(namedtuple('EntryPoint', 'name entry extras')):
 
 
 class EntryPoints(object):
-
 
     def __init__(self):
         self.listings = {}
@@ -64,5 +64,3 @@ class WheelInfo(object):
                 'Tag: {tag}'.format(tag=tag)
             )
         return '\n'.join(res)
-
-

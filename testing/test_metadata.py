@@ -10,7 +10,6 @@ Tag: py3-none-any\
 """
 
 
-
 def test_entrypoints():
     ep = metadata.EntryPoints.from_spec_dict({
         'pytest': {
