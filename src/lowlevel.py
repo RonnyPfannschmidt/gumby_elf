@@ -7,7 +7,7 @@ import zipfile
 
 from setuptools_scm import get_version
 
-from .metadata import EntryPoints
+from .metadata import EntryPoints, WheelInfo
 
 WHEEL_FMT = './dist/{spec[name]}-{version}-py27.py3-none-any.whl'
 DISTINFO_FMT = '{spec[name]}-{version}.dist-info'
@@ -21,14 +21,6 @@ with open(__file__) as fp:
     __code = compile(fp.read(), __file__, 'exec')
     exec(__code, globals(), globals())
 """
-WHEEL_DEFAULT_META = """\
-Wheel-Version: 1.0
-Generator: gumby_elf pre aplha
-Root-Is-Purelib: true
-Tag: py27-none-any
-Tag: py3-none-any
-"""
-
 
 def record_hash(data):
     return 'sha1=' + base64.urlsafe_b64encode(hashlib.sha1(data).digest())
@@ -106,7 +98,7 @@ def install_develop_data(spec):
     )
     bundle.add_file(
         os.path.join(distinfo_folder, 'WHEEL'),
-        WHEEL_DEFAULT_META,
+        str(WheelInfo.default()),
     )
     bundle.finalize(os.path.join(distinfo_folder, 'RECORD'))
     return subprocess.call(

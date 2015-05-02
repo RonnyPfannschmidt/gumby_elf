@@ -33,3 +33,36 @@ class EntryPoints(object):
             for item in listing:
                 res.append(str(item).strip())
         return '\n'.join(res)
+
+
+class WheelInfo(object):
+    def __init__(self, wheel_version, tags, root_purelib):
+        self.wheel_version = wheel_version
+        self.tags = tags
+        self.root_purelib = root_purelib
+
+    @classmethod
+    def default(cls):
+        return cls(
+            wheel_version='1.0',
+            tags=[
+                'py27-none-any',
+                'py3-none-any',
+            ],
+            root_purelib=True,
+        )
+
+    def __str__(self):
+        res = [
+            'Wheel-Version: {wv}'.format(wv=self.wheel_version),
+            'Generator: gumby_elf pre alpha',
+            'Root-Is-Purelib: {rp}'.format(
+                rp='true' if self.root_purelib else 'false'),
+        ]
+        for tag in self.tags:
+            res.append(
+                'Tag: {tag}'.format(tag=tag)
+            )
+        return '\n'.join(res)
+
+
