@@ -7,6 +7,7 @@ import zipfile
 
 from setuptools_scm import get_version
 
+from .metadata import EntryPoints
 
 WHEEL_FMT = './dist/{spec[name]}-{version}-py27.py3-none-any.whl'
 DISTINFO_FMT = '{spec[name]}-{version}.dist-info'
@@ -62,13 +63,8 @@ def metadata_11(spec, version):
 
 
 def entrypoints_11(spec):
-    entrypoints = spec.get('entrypoints', {})
-    res = ""
-    for name, items in entrypoints.items():
-        items = ['{0} = {1}'.format(*item) for item in items.items()]
-        res += '[' + name + ']\n' + '\n'.join(items) + '\n'
-    return res
-
+    ep = EntryPoints.from_spec_dict(spec)
+    return ep.to_11_metadata()
 
 def bootstraper(spec):
     fn = os.path.abspath(spec.filename)
@@ -96,9 +92,9 @@ def install_develop_data(spec):
         spec.data['package'] + '.py',
         bootstraper(spec))
 
-    distinfo_folder = .format(
-        spec=spec,,
-        version=Version)
+    distinfo_folder = DISTINFO_FMT.format(
+        spec=spec,
+        version=version)
 
     bundle.add_file(
         os.path.join(distinfo_folder, 'METADATA'),
