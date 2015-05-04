@@ -12,12 +12,12 @@ with open('package.json') as fp:
 
 package = data['python package']
 
-
-requires = [
-    k if v == 'latest' else '%s=%s' % (k, v)
-    for k, v in package['dependencies'].items()
-]
-subprocess.check_call(['pip', 'install', '-q', '-U'] + requires)
+if '--plain' not in sys.argv:
+    requires = [
+        k if v == 'latest' else '%s=%s' % (k, v)
+        for k, v in package['dependencies'].items()
+    ]
+    subprocess.check_call(['pip', 'install', '-q', '-U'] + requires)
 
 
 mod = types.ModuleType(str(package['package']))

@@ -67,14 +67,15 @@ def build_sdist(obj):
 @click.option('--force-version')
 @click.option('--extras', default=None)
 def install_wheel(obj, force_version, extras):
+
     packagename = '{name}{extras}==={version}'.format(
         name=obj['name'],
         version=force_version,
         extras='' if extras is None else '[%s]' % extras
     )
-
+    call(['pip', 'uninstall', packagename])
     call([
-        'pip', 'install', '-U', '--force-reinstall', packagename,
+        'pip', 'install', packagename,
         '--find-links', 'dist'])
 
 
