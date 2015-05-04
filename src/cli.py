@@ -73,7 +73,7 @@ def install_wheel(obj, force_version, extras):
         version=force_version,
         extras='' if extras is None else '[%s]' % extras
     )
-    call(['pip', 'uninstall', packagename])
+    call(['pip', 'uninstall', packagename, '-y'])
     call([
         'pip', 'install', packagename,
         '--find-links', 'dist'])
