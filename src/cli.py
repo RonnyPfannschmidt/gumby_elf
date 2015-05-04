@@ -1,3 +1,4 @@
+from os import path, mkdir
 from subprocess import call
 from glob import glob
 
@@ -7,10 +8,7 @@ import click
 
 
 from .config import Specification
-from .lowlevel import (
-    install_develop_data,
-    install_extra_requires,
-)
+from . import packing
 
 
 @click.group()
@@ -21,20 +19,18 @@ from .lowlevel import (
 def main(ctx, specification):
     ctx.obj = Specification(specification)
     ctx.obj.version = get_version()
+    if not path.isdir('dist'):
+        mkdir('dist')
 
 
 @main.command()
-@click.pass_obj
-def develop(obj):
+@click.pass_context
+def develop(ctx):
     click.secho("BRAIN HURT", fg='red')
-    res = install_develop_data(obj)
-    if not res:
-        res = install_extra_requires(obj, ['dev'])  # XXX
-    if not res:
-        click.secho("NO MORE", fg='green')
-    else:
-        click.secho("MUCH MORE", fg='red')
-    return res
+    version = ctx.invoke(build_wheel, develop=True)
+    ctx.invoke(install_wheel,
+               force_version=version,
+               extras='dev')
 
 
 @main.command()
@@ -45,15 +41,20 @@ def lint():
 @main.command()
 @click.pass_context
 def install(ctx):
-    ctx.invoke(build_wheel)
-    ctx.invoke(install_wheel)
+    version = ctx.invoke(build_wheel, develop=false)
+    ctx.invoke(install_wheel, force_version=version)
 
 
 @main.command()
 @click.pass_obj
-def build_wheel(obj):
-    click.secho("Missing whl build", fg='red', bold=True)
-
+@click.option('--develop', is_flag=True)
+def build_wheel(obj, develop):
+    if develop:
+        packing.build_develop_wheel(obj, 'dist')
+        return packing.develop_version(obj.version)
+    else:
+        packing.build_wheel(obj, 'dist')
+        return obj.version
 
 @main.command()
 @click.pass_obj
@@ -63,8 +64,18 @@ def build_sdist(obj):
 
 @main.command()
 @click.pass_obj
-def install_wheel(obj):
-    click.secho("Missing whl install", fg='red', bold=True)
+@click.option('--force-version')
+@click.option('--extras', default=None)
+def install_wheel(obj, force_version, extras):
+    packagename = '{name}{extras}==={version}'.format(
+        name=obj['name'],
+        version=force_version,
+        extras='' if extras is None else '[%s]' % extras
+    )
+
+    call([
+        'pip', 'install', '-U', '--force-reinstall', packagename,
+        '--find-links', 'dist'])
 
 
 @main.command()
