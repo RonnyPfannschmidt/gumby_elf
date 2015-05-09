@@ -3,7 +3,7 @@ Name: GumbyElf
 Summary: Developer faced Python Package Packager
 Home-page: http://bitbucket.org/RonnyPfannschmidt/GumbyElf
 Author: Ronny Pfannschmidt
-Author-email: opensource@ronnypfannschmidt.de
+Author-email: opensource+gumby_elf@ronnypfannschmidt.de
 License: MIT
 Keywords: wheel,packaging
 Platform: UNKNOWN
