@@ -1,21 +1,20 @@
-"""bootstrap script"""
+"""
+bootstrap script
+
+will do a devleop install of gumby elf
+"""
 
 import sys
 import subprocess
-import json
 import types
 
-
-
-
-
 if '--plain' not in sys.argv:
-    from src.config import GumbyLowlevelIniSpecification
+    import email
+    with open('METADATA.in') as fp:
+        message = email.message_from_file(fp)
 
-    with open('gumby_elf.ll.ini') as fp:
-        spec = GumbyLowlevelIniSpecification(fp)
-
-    requires = spec.get_requires()
+    requires = message.get_all('Requires-Dist')
+    requires = [x for x in requires if ';' not in x]
     subprocess.check_call(['pip', 'install', '-q', '-U'] + requires)
 
 mod = types.ModuleType('gumby_elf')
