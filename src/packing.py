@@ -5,7 +5,6 @@ import pkgutil
 import hashlib
 import base64
 
-from .metadata import EntryPoints, WheelInfo
 from .mkwheel import (
     WheelBuilder,
     wheel_name,
@@ -13,18 +12,8 @@ from .mkwheel import (
     write_src_to_whl,
 )
 
-DISTINFO_FMT = '{spec.name}-{version}.dist-info'
 
-def metadata_11(spec, version):
-    # XXX: better pathhandling
-    # XXX: incomplete
-    assert spec.metadata
-    from email.generator import Generator
-    spec.metadata['Version'] = version
-    from io import BytesIO
-    io = BytesIO()
-    Generator(io).flatten(spec.metadata)
-    return io.getvalue()
+
 
 
 def develop_version(version):
@@ -51,7 +40,7 @@ def bootstraper(spec):
 
 def build_develop_wheel(spec, distdir):
     version = develop_version(spec.version)
-    target_filename = wheel_name(dist, spec, version=version)
+    target_filename = wheel_name(distdir, spec, version=version)
     bld = WheelBuilder(target_filename)
     bld.add_file(
         name=spec.package + '.py',

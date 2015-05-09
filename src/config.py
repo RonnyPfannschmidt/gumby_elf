@@ -2,7 +2,6 @@ import os
 
 
 def read_specification(root):
-    print root, os.listdir(root)
     joined = os.path.join(root, 'gumby_elf.ll.ini')
     if os.path.exists(joined):
         with open(joined) as fp:
