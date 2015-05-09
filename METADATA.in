@@ -24,5 +24,6 @@ Requires-Dist: setuptools_scm
 Requires-Dist: wheel
 Requires-Dist: pip
 Requires-Dist: flake8
+Requires-Dist: effect
 Requires-Dist: pytest; extra == 'dev'
 Requires-Dist: tox; extra == 'dev'
