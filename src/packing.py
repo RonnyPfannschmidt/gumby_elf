@@ -5,8 +5,8 @@ import pkgutil
 import hashlib
 import base64
 
-WHEEL_FMT = '{spec[name]}-{version}-py27.py3-none-any.whl'
-DISTINFO_FMT = '{spec[name]}-{version}.dist-info'
+WHEEL_FMT = '{spec.name}-{version}-py27.py3-none-any.whl'
+DISTINFO_FMT = '{spec.name}-{version}.dist-info'
 
 
 from .metadata import EntryPoints, WheelInfo
@@ -16,14 +16,20 @@ from .metadata import EntryPoints, WheelInfo
 def metadata_11(spec, version):
     # XXX: better pathhandling
     # XXX: incomplete
-    result = [
-        'Name: $(name)\n' % spec.data,
-        'Version: ' + version + '\n',
-    ]
-    return ''.join(result)
+    assert spec.metadata
+    from email.generator import Generator
+    spec.metadata['Version'] = version
+    from io import BytesIO
+    io = BytesIO()
+    Generator(io).flatten(spec.metadata)
+
+    return io.getvalue()
+
 
 
 def entrypoints_11(spec):
+    with open(spec.parser.get('gumby_elf', 'entry_points')) as fp:
+        return fp.read()
     ep = EntryPoints.from_spec_dict(spec)
     return ep.to_11_metadata()
 
@@ -97,7 +103,7 @@ def build_develop_wheel(spec, distdir):
     target_filename = WHEEL_FMT.format( spec=spec, version=version)
     bld = WheelBuilder(distdir, target_filename)
     bld.add_file(
-        name=spec.data['package'] + '.py',
+        name=spec.package + '.py',
         data=bootstraper(spec),
     )
     finalize_whl_metadata(bld, spec, version=version)

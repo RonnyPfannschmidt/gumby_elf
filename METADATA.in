@@ -1,0 +1,28 @@
+Metadata-Version: 2.0
+Name: GumbyElf
+Summary: Developer faced Python Package Packager
+Home-page: http://bitbucket.org/RonnyPfannschmidt/GumbyElf
+Author: Ronny Pfannschmidt
+Author-email: opensource@ronnypfannschmidt.de
+License: MIT
+Keywords: wheel,packaging
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.2
+Classifier: Programming Language :: Python :: 3.3
+Classifier: Programming Language :: Python :: 3.4
+Provides-Extra: dev
+Requires-Dist: click
+Requires-Dist: setuptools
+Requires-Dist: setuptools_scm
+Requires-Dist: wheel
+Requires-Dist: pip
+Requires-Dist: flake8
+Requires-Dist: pytest; extra == 'dev'
+Requires-Dist: tox; extra == 'dev'

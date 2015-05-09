@@ -7,17 +7,19 @@ from setuptools_scm import get_version
 import click
 
 
-from .config import Specification
+from . import config
 from . import packing
 
 
 @click.group()
 @click.pass_context
 @click.option(
-    '--specification',
-    type=click.File('r'), default='package.json')
-def main(ctx, specification):
-    ctx.obj = Specification(specification)
+    '--root',
+    type=click.Path(dir_okay=True, file_okay=False, resolve_path=True),
+    default='.')
+def main(ctx, root):
+
+    ctx.obj = config.read_specification(root)
     ctx.obj.version = get_version()
     if not path.isdir('dist'):
         mkdir('dist')
@@ -69,7 +71,7 @@ def build_sdist(obj):
 def install_wheel(obj, force_version, extras):
 
     packagename = '{name}{extras}==={version}'.format(
-        name=obj['name'],
+        name=obj.name,
         version=force_version,
         extras='' if extras is None else '[%s]' % extras
     )

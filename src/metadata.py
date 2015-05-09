@@ -1,6 +1,5 @@
 from collections import namedtuple
 
-
 class EntryPoint(namedtuple('EntryPoint', 'name entry extras')):
 
     def __str__(self):
