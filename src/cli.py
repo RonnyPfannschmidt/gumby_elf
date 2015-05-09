@@ -28,7 +28,6 @@ def main(ctx, root):
 @main.command()
 @click.pass_context
 def develop(ctx):
-    click.secho("BRAIN HURT", fg='red')
     version = ctx.invoke(build_wheel, develop=True)
     ctx.invoke(install_wheel,
                force_version=version,
@@ -69,16 +68,16 @@ def build_sdist(obj):
 @click.option('--force-version')
 @click.option('--extras', default=None)
 def install_wheel(obj, force_version, extras):
-
     packagename = '{name}{extras}==={version}'.format(
         name=obj.name,
         version=force_version,
         extras='' if extras is None else '[%s]' % extras
     )
-    call(['pip', 'uninstall', packagename, '-y'])
+    click.secho('reinstalling ' + packagename, bold=True)
+    call(['pip', 'uninstall', packagename, '-yq'])
     call([
         'pip', 'install', packagename,
-        '--find-links', 'dist'])
+        '--find-links', 'dist', '-q'])
 
 
 @main.command()

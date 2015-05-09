@@ -5,12 +5,11 @@ import pkgutil
 import hashlib
 import base64
 
-WHEEL_FMT = '{spec.name}-{version}-py27.py3-none-any.whl'
-DISTINFO_FMT = '{spec.name}-{version}.dist-info'
-
-
 from .metadata import EntryPoints, WheelInfo
 
+
+WHEEL_FMT = '{spec.name}-{version}-py27.py3-none-any.whl'
+DISTINFO_FMT = '{spec.name}-{version}.dist-info'
 
 
 def metadata_11(spec, version):
@@ -22,17 +21,12 @@ def metadata_11(spec, version):
     from io import BytesIO
     io = BytesIO()
     Generator(io).flatten(spec.metadata)
-
     return io.getvalue()
-
 
 
 def entrypoints_11(spec):
     with open(spec.parser.get('gumby_elf', 'entry_points')) as fp:
         return fp.read()
-    ep = EntryPoints.from_spec_dict(spec)
-    return ep.to_11_metadata()
-
 
 
 def record_hash(data):
