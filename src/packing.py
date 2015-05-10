@@ -13,14 +13,9 @@ from .mkwheel import (
 )
 
 
-
-
-
 def develop_version(version):
     spec_char = '.' if '+' in version else '+'
     return version + spec_char + "gumby.develop"
-
-
 
 
 def build_wheel(spec, distdir):

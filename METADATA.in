@@ -14,13 +14,16 @@ Classifier: Programming Language :: Python :: 2.6
 Classifier: Programming Language :: Python :: 2.7
 Classifier: Programming Language :: Python :: 3.3
 Classifier: Programming Language :: Python :: 3.4
-Provides-Extra: dev
 Requires-Dist: click
 Requires-Dist: setuptools
 Requires-Dist: setuptools_scm
 Requires-Dist: wheel
 Requires-Dist: pip
 Requires-Dist: flake8
-Requires-Dist: effect
+Requires-Dist: characteristic
+Requires-Dist: twine
+Provides-Extra: dev
 Requires-Dist: pytest; extra == 'dev'
 Requires-Dist: tox; extra == 'dev'
+Requires-Dist: bpython; extra == 'dev'
+Requires-Dist: pdbpp; extra == 'dev'

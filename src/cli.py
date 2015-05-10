@@ -83,5 +83,25 @@ def install_wheel(obj, force_version, extras):
 @main.command()
 @click.pass_context
 def dist(ctx):
-    ctx.invoke(build_wheel)
-    ctx.invoke(build_sdist)
+    return [
+        packing.build_wheel(ctx.obj, 'dist'),
+        #ctx.invoke(build_sdist),
+    ]
+
+
+@main.command()
+@click.pass_context
+@click.option('--repository', default='pypi')
+def publish(ctx, repository):
+    files = ctx.invoke(dist)
+    from twine.commands.upload import upload
+    upload(
+        dists=files,
+        repository=repository,
+        sign=False,
+        identity=None,
+        username=None,
+        password=None,
+        comment='',
+        sign_with=None,
+    )
