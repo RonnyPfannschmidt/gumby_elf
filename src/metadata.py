@@ -63,3 +63,10 @@ class WheelInfo(object):
                 'Tag: {tag}'.format(tag=tag)
             )
         return '\n'.join(res)
+
+
+    def to_bytes(self):
+        data = str(self)
+        if not isinstance(data, bytes):
+            data = data.encode('utf-8')
+        return data

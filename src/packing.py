@@ -30,7 +30,8 @@ def bootstraper(spec):
     fn = os.path.abspath(spec.filename)
     srcdir = os.path.join(os.path.dirname(fn), 'src')
     template = pkgutil.get_data(__name__, 'bootstrap_template.py.txt')
-    return template.format(srcfolder=srcdir)
+    template = template.decode('utf-8')
+    return template.format(srcfolder=srcdir).encode('utf-8')
 
 
 def build_develop_wheel(spec, distdir):

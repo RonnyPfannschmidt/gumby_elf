@@ -26,4 +26,3 @@ Provides-Extra: dev
 Requires-Dist: pytest; extra == 'dev'
 Requires-Dist: tox; extra == 'dev'
 Requires-Dist: bpython; extra == 'dev'
-Requires-Dist: pdbpp; extra == 'dev'

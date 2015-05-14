@@ -17,11 +17,11 @@ def wheel_name(dist, spec, version):
 
 def record_hash(data):
     digest = sha1(data).digest()
-    return 'sha1=' + urlsafe_b64encode(digest)
+    return 'sha1=' + urlsafe_b64encode(digest).decode('ascii')
 
 
 def entrypoints_11(spec):
-    with open(spec.parser.get('gumby_elf', 'entry_points')) as fp:
+    with open(spec.parser.get('gumby_elf', 'entry_points'), 'rb') as fp:
         return fp.read()
 
 
@@ -58,7 +58,7 @@ def finalize_whl_metadata(builder, spec, version):
     )
     builder.add_file(
         path.join(distinfo_folder, 'WHEEL'),
-        str(WheelInfo.default()),
+        WheelInfo.default().to_bytes(),
     )
     builder.finalize(path.join(distinfo_folder, 'RECORD'))
 
@@ -84,7 +84,8 @@ def metadata_11(spec, version):
     assert spec.metadata
     from email.generator import Generator
     spec.metadata['Version'] = version
-    from io import BytesIO
-    io = BytesIO()
+
+    from six import StringIO
+    io = StringIO()
     Generator(io).flatten(spec.metadata)
-    return io.getvalue()
+    return io.getvalue().encode('utf-8')
