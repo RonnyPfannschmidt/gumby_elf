@@ -1,8 +1,28 @@
 {
-	"folders":
-	[
+	"folders": [
 		{
-			"path": "."
+			"name": "Main",
+			"path": ".",
+			"folder_exclude_patterns": [
+				"src",
+				"testing",
+				"dist",
+				".tox"
+			]
+		},
+		{
+			"name": "Code",
+			"path": "src"
+		},
+		{
+			"name": "Tests",
+			"path": "testing"
+		}
+	],
+	"build_systems": [
+		{
+			"name": "tox",
+			"cmd": ["./.env/bin/tox"]
 		}
 	]
 }
