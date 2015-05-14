@@ -20,7 +20,10 @@ if '--plain' not in sys.argv:
 mod = types.ModuleType('gumby_elf')
 sys.modules[mod.__name__] = mod
 mod.__path__ = ['src']
-execfile('src/__init__.py', mod.__dict__)
+with open('src/__init__.py') as fp:
+    code = fp.read()
+code = compile(code, 'src/__init__.py', 'exec')
+exec(code, mod.__dict__)
 
 
 from gumby_elf.cli import main
