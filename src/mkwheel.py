@@ -21,7 +21,7 @@ def record_hash(data):
 
 
 def entrypoints_11(spec):
-    with open(spec.parser.get('gumby_elf', 'entry_points'), 'rb') as fp:
+    with open(spec.data['entry-points'], 'rb') as fp:
         return fp.read()
 
 

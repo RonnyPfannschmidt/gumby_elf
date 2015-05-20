@@ -10,7 +10,7 @@ import types
 
 if '--plain' not in sys.argv:
     import email
-    with open('METADATA.in') as fp:
+    with open('metadata/METADATA.in') as fp:
         message = email.message_from_file(fp)
 
     requires = message.get_all('Requires-Dist')

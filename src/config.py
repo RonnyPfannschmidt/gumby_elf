@@ -2,10 +2,10 @@ import os
 
 
 def read_specification(root):
-    joined = os.path.join(root, 'gumby_elf.ll.ini')
+    joined = os.path.join(root, 'gumby_elf.ll.json')
     if os.path.exists(joined):
         with open(joined) as fp:
-            return GumbyLowlevelIniSpecification(fp)
+            return GumbyLowlevelSpecification(fp)
     assert 0
 
 
@@ -20,26 +20,13 @@ class Specification(object):
 
 
 
-class PackageJSonSpecification(Specification):
-    def deserialize(self, fp):
-        self.data = json.load(fp)['python package']
 
-    def __getitem__(self, key):
-        return self.data[key]
-
-    def get(self, key, default=None):
-        return self.data.get(key, default)
-
-
-class GumbyLowlevelIniSpecification(Specification):
+class GumbyLowlevelSpecification(Specification):
     _metadata = None
+
     def deserialize(self, fp):
-        try:
-            from configparser import ConfigParser
-        except ImportError:
-            from ConfigParser import ConfigParser
-        self.parser = ConfigParser()
-        self.parser.readfp(fp)
+        from json import load
+        self.data = load(fp)
 
     @property
     def name(self):
@@ -48,12 +35,11 @@ class GumbyLowlevelIniSpecification(Specification):
 
     @property
     def package(self):
-        return self.parser.get('gumby_elf', 'package')
-
+        return self.data['package-map'].values()[0]
     @property
     def metadata(self):
         if self._metadata is None:
-            metadata_file = self.parser.get("gumby_elf", 'metadata_base')
+            metadata_file = self.data['metadata']
             import email
             with open(metadata_file) as fp:
                 self._metadata = email.message_from_file(fp)

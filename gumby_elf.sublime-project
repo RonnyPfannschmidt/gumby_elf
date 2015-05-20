@@ -7,8 +7,13 @@
 				"src",
 				"testing",
 				"dist",
+				"metadata",
 				".tox"
 			]
+		},
+		{
+			"name": "Metadata",
+			"path": "metadata"
 		},
 		{
 			"name": "Code",
