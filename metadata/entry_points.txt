@@ -1,2 +1,2 @@
 [console_scripts]
-gumby_elf = gumby_elf.cli:main
+gumby = gumby_elf.cli:main
