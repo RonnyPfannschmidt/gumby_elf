@@ -10,4 +10,4 @@ env:
     - TESTENV=py35
     - TESTENV=pypy
 
-script: tox --recreate -e $TESTENV
+script: tox --recreate -e $TESTENV-install
