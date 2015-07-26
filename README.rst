@@ -1,6 +1,9 @@
 Gumby Elf
 =========
 
+.. image:: https://travis-ci.org/RonnyPfannschmidt/gumby_elf.svg?branch=master
+    :target: https://travis-ci.org/RonnyPfannschmidt/gumby_elf
+
 Brain Surgery for Packages
 
 Gumby Elf provides a developer facing alternative to setuptools+wheel.
