@@ -1,0 +1,13 @@
+
+sudo: false
+language: python
+install: "pip install -U tox"
+# # command to run tests
+env:
+  matrix:
+    - TESTENV=py27
+    - TESTENV=py34
+    - TESTENV=py35
+    - TESTENV=pypy
+
+script: tox --recreate -e $TESTENV
