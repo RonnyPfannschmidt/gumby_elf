@@ -1,9 +1,6 @@
 import os.path
 
-import zipfile
 import pkgutil
-import hashlib
-import base64
 
 from .mkwheel import (
     WheelBuilder,

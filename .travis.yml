@@ -5,9 +5,15 @@ install: "pip install -U tox"
 # # command to run tests
 env:
   matrix:
-    - TESTENV=py27
-    - TESTENV=py34
-    - TESTENV=py35
-    - TESTENV=pypy
+    - TESTENV=flake8
+    - TESTENV=py27-install
+    - TESTENV=py34-install
+    - TESTENV=py35-install
+    - TESTENV=pypy-install
+    - TESTENV=py27-develop
+    - TESTENV=py34-develop
+    - TESTENV=py35-develop
+    - TESTENV=pypy-develop
 
-script: tox --recreate -e $TESTENV-install
+
+script: tox --recreate -e $TESTENV

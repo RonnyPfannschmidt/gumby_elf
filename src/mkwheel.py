@@ -3,7 +3,7 @@ from zipfile import ZipFile
 from base64 import urlsafe_b64encode
 from hashlib import sha1
 
-from .metadata import EntryPoints, WheelInfo
+from .metadata import WheelInfo
 
 
 WHEEL_FMT = '{spec.name}-{version}-py27.py3-none-any.whl'
@@ -77,6 +77,7 @@ def write_src_to_whl(builder, spec):
                 name=path.join(targetfolder, file_name),
                 data=content,
             )
+
 
 def metadata_11(spec, version):
     # XXX: better pathhandling

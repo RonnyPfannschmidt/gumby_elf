@@ -19,8 +19,6 @@ class Specification(object):
         raise NotImplementedError('deserialize')
 
 
-
-
 class GumbyLowlevelSpecification(Specification):
     _metadata = None
 
@@ -32,10 +30,10 @@ class GumbyLowlevelSpecification(Specification):
     def name(self):
         return self.metadata['Name']
 
-
     @property
     def package(self):
-        return self.data['package-map'].values()[0]
+        return list(self.data['package-map'].values())[0]
+
     @property
     def metadata(self):
         if self._metadata is None:
@@ -44,7 +42,6 @@ class GumbyLowlevelSpecification(Specification):
             with open(metadata_file) as fp:
                 self._metadata = email.message_from_file(fp)
         return self._metadata
-
 
     def get_requires(self):
         return [

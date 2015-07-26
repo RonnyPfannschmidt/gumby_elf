@@ -42,7 +42,7 @@ def lint():
 @main.command()
 @click.pass_context
 def install(ctx):
-    version = ctx.invoke(build_wheel, develop=false)
+    version = ctx.invoke(build_wheel, develop=False)
     ctx.invoke(install_wheel, force_version=version)
 
 
@@ -56,6 +56,7 @@ def build_wheel(obj, develop):
     else:
         packing.build_wheel(obj, 'dist')
         return obj.version
+
 
 @main.command()
 @click.pass_obj
@@ -85,7 +86,7 @@ def install_wheel(obj, force_version, extras):
 def dist(ctx):
     return [
         packing.build_wheel(ctx.obj, 'dist'),
-        #ctx.invoke(build_sdist),
+        # ctx.invoke(build_sdist),
     ]
 
 
