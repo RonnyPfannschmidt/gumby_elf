@@ -21,9 +21,11 @@ Future plans
 * build requirements
 * zetup
 * building extension
+
   * c
   * cffi
   * cython
+
 * debian packages/ppa setups
 * rpm specs/source rpm's for copr
 
