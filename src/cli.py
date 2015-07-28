@@ -1,4 +1,6 @@
+import sys
 from os import path, mkdir
+
 from subprocess import call
 from glob import glob
 
@@ -75,9 +77,10 @@ def install_wheel(obj, force_version, extras):
         extras='' if extras is None else '[%s]' % extras
     )
     click.secho('reinstalling ' + packagename, bold=True)
-    call(['pip', 'uninstall', packagename, '-yq'])
+    call([sys.executable, '-m', 'pip', 'uninstall', packagename, '-yq'])
     call([
-        'pip', 'install', packagename,
+        sys.executable, '-m', 'pip',
+        'install', packagename,
         '--find-links', 'dist', '-q'])
 
 
