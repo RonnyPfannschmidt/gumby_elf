@@ -27,6 +27,10 @@ with open('src/__init__.py') as fp:
 code = compile(code, 'src/__init__.py', 'exec')
 exec(code, mod.__dict__)
 
+from gumby_elf.core import manager
+from gumby_elf.plugins import lowlevel
+if not manager.is_registered(lowlevel):
+    manager.register(lowlevel)
 
 from gumby_elf.cli import main
 main(['develop'])

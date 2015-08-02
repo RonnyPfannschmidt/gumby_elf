@@ -68,6 +68,12 @@ def build_sdist(obj):
 
 @main.command()
 @click.pass_obj
+def build_eggs(obj):
+    click.secho("Missing sdist build", fg='red', bold=True)
+
+
+@main.command()
+@click.pass_obj
 @click.option('--force-version')
 @click.option('--extras', default=None)
 def install_wheel(obj, force_version, extras):

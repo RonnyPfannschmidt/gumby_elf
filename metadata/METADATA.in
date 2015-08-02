@@ -17,6 +17,7 @@ Classifier: Programming Language :: Python :: 3.4
 Requires-Dist: click
 Requires-Dist: six
 Requires-Dist: setuptools
+Requires-Dist: pluggy
 Requires-Dist: setuptools_scm
 Requires-Dist: wheel
 Requires-Dist: pip
