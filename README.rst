@@ -1,9 +1,6 @@
 Gumby Elf
 =========
 
-.. image:: https://travis-ci.org/RonnyPfannschmidt/gumby_elf.svg?branch=master
-    :target: https://travis-ci.org/RonnyPfannschmidt/gumby_elf
-
 Brain Surgery for Packages
 
 Gumby Elf provides a developer facing alternative to setuptools+wheel.
@@ -20,17 +17,12 @@ out of very basic predeclared metadata,
 Future plans
 ===============
 
-* setup.cfg static metadata support
-* build requirements
-* zetup
 * building extension
 
   * c
   * cffi
   * cython
 
-* debian packages/ppa setups
-* rpm specs/source rpm's for copr
 
 
 
