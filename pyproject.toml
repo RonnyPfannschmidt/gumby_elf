@@ -1,0 +1,55 @@
+[build-system]
+requires = [
+    "setuptools_scm>=6.3",
+    "click",
+    "pep621",
+    "tomli",
+    "editables",
+]
+build-backend = "lone_elf"
+backend-path = ["."]
+
+
+[project]
+name = "GumbyElf"
+description = "Developer faced Python Package Packager"
+readme = "README.rst"
+requires-python = ">=3.7"
+dynamic = ["version"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+keywords = ["wheel", "packaging"]
+dependencies = [
+    "setuptools_scm>=6.3",
+    "click",
+    "pep621",
+    "tomli",
+    "editables",
+
+]
+[project.optional-dependencies]
+test = ["pytest"]
+
+[[project.authors]]
+name = "Ronny Pfannschmidt"
+email = "opensource+gumby_elf@ronnypfannschmidt.de"
+
+
+[project.urls]
+repository = "https://github.com/RonnyPfannschmidt/gumby_elf"
+
+
+[project.scripts]
+gumby = "gumby_elf.cli:main"
+
+
+[tool.gumby_elf]
+package-name = "gumby_elf"

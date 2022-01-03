@@ -1,4 +1,2 @@
 [console_scripts]
 gumby = gumby_elf.cli:main
-[gumby.plugin]
-lowlevel_spec = gumby_elf.plugins.lowlevel

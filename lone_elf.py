@@ -5,32 +5,15 @@ will do a devleop install of gumby elf
 """
 
 import sys
-import subprocess
 import types
 
-if '--plain' not in sys.argv:
-    import email
-    with open('metadata/METADATA.in') as fp:
-        message = email.message_from_file(fp)
 
-    requires = message.get_all('Requires-Dist')
-    requires = [x for x in requires if ';' not in x]
-    subprocess.check_call([
-        sys.executable, '-m', 'pip',
-        'install', '-q', '-U'] + requires)
-
-mod = types.ModuleType('gumby_elf')
+mod = types.ModuleType("gumby_elf")
 sys.modules[mod.__name__] = mod
-mod.__path__ = ['src']
-with open('src/__init__.py') as fp:
+mod.__path__ = ["src"]
+with open("src/__init__.py") as fp:
     code = fp.read()
-code = compile(code, 'src/__init__.py', 'exec')
+code = compile(code, "src/__init__.py", "exec")
 exec(code, mod.__dict__)
 
-from gumby_elf.core import manager
-from gumby_elf.plugins import lowlevel
-if not manager.is_registered(lowlevel):
-    manager.register(lowlevel)
-
-from gumby_elf.cli import main
-main(['develop'])
+from gumby_elf.build_backend import *

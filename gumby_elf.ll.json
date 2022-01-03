@@ -1,5 +1,0 @@
-{
-	"metadata": "metadata/METADATA.in",
-	"entry-points": "metadata/entry_points.txt",
-	"package-map": {"src": "gumby_elf"}
-}

@@ -11,17 +11,16 @@ Tag: py3-none-any\
 
 
 def test_entrypoints():
-    ep = metadata.EntryPoints.from_spec_dict({
-        'pytest': {
-            'a': 'b',
+    ep = metadata.EntryPoints.from_spec_dict(
+        {
+            "pytest": {
+                "a": "b",
+            }
         }
-    })
+    )
 
     metadata_11 = ep.to_11_metadata()
-    assert metadata_11 == (
-        '[pytest]\n'
-        'a = b'
-    )
+    assert metadata_11 == ("[pytest]\n" "a = b")
 
 
 def test_wheelinfo():
