@@ -1,10 +1,10 @@
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 from typing import Dict
 from typing import Sequence
 
 import tomli
-from dataclasses import dataclass
 from pep621 import StandardMetadata
 
 

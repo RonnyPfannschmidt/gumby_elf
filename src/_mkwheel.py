@@ -1,6 +1,7 @@
 from base64 import urlsafe_b64encode
 from contextlib import closing
 from contextlib import contextmanager
+from dataclasses import dataclass
 from hashlib import sha1
 from pathlib import Path
 from pathlib import PurePath
@@ -8,8 +9,6 @@ from typing import List
 from typing import NamedTuple
 from typing import Optional
 from zipfile import ZipFile
-
-from dataclasses import dataclass
 
 from ._metadata import entrypoints_from_spec
 from ._metadata import get_wheel_info
