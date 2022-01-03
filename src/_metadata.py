@@ -1,9 +1,11 @@
 from pathlib import Path
-from typing import Any, Sequence, Dict
-from dataclasses import dataclass
+from typing import Any
+from typing import Dict
+from typing import Sequence
 
-from pep621 import StandardMetadata
 import tomli
+from dataclasses import dataclass
+from pep621 import StandardMetadata
 
 
 @dataclass
@@ -33,9 +35,9 @@ class Specification:
 
 def get_wheel_info(
     wheel_version: str = "1.0",
-    tags: Sequence[str] = (b"py3-none-any"),
+    tags: Sequence[str] = ("py3-none-any",),
     root_purelib: bool = True,
-) -> str:
+) -> bytes:
 
     return "\n".join(
         [

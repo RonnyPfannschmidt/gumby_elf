@@ -1,12 +1,19 @@
-from contextlib import closing, contextmanager
-from dataclasses import dataclass
-from pathlib import Path, PurePath
-from typing import List, NamedTuple, Optional
-from zipfile import ZIP_LZMA, ZipFile
 from base64 import urlsafe_b64encode
+from contextlib import closing
+from contextlib import contextmanager
 from hashlib import sha1
+from pathlib import Path
+from pathlib import PurePath
+from typing import List
+from typing import NamedTuple
+from typing import Optional
+from zipfile import ZipFile
 
-from ._metadata import get_wheel_info, Specification, entrypoints_from_spec
+from dataclasses import dataclass
+
+from ._metadata import entrypoints_from_spec
+from ._metadata import get_wheel_info
+from ._metadata import Specification
 
 
 WHEEL_FMT = "{spec.name}-{spec.version}-py3-none-any.whl"
@@ -32,7 +39,7 @@ class Record(NamedTuple):
 
 
 @dataclass
-class WheelBuilder(object):
+class WheelBuilder:
     _archive: ZipFile
     _record: List[Record]
 
@@ -41,7 +48,7 @@ class WheelBuilder(object):
     def for_target(cls, target: Path, spec: Specification):
 
         with closing(ZipFile(target, "w")) as archive:
-            record = []
+            record: List[Record] = []
             bld = WheelBuilder(archive, record)
             yield bld
 

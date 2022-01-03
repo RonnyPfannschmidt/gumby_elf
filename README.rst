@@ -22,7 +22,3 @@ Future plans
   * c
   * cffi
   * cython
-
-
-
-

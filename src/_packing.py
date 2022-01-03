@@ -1,12 +1,9 @@
 import os.path
-
 import pkgutil
 
-from ._mkwheel import (
-    WheelBuilder,
-    wheel_name,
-    write_src_to_whl,
-)
+from ._mkwheel import wheel_name
+from ._mkwheel import WheelBuilder
+from ._mkwheel import write_src_to_whl
 
 
 def develop_version(version):

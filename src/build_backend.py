@@ -1,10 +1,10 @@
-from ._metadata import Specification
-from . import _packing as pack
 import os
+from pathlib import Path
 
 from setuptools_scm import get_version
 
-from pathlib import Path
+from . import _packing as pack
+from ._metadata import Specification
 
 
 def build_wheel(wheel_directory, config_settings=None, metadata_directory=None):
