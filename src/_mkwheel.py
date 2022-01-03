@@ -22,6 +22,7 @@ def record_hash(data: bytes) -> str:
     digest = sha1(data).digest()
     return "sha1=" + urlsafe_b64encode(digest).decode("ascii")
 
+
 class Record(NamedTuple):
     path: PurePath
     hash: Optional[str]
@@ -30,18 +31,16 @@ class Record(NamedTuple):
         return f"{self.path}, {self.hash or ''}"
 
 
-
 @dataclass
 class WheelBuilder(object):
     _archive: ZipFile
-    _record: List[Record] 
-
+    _record: List[Record]
 
     @classmethod
     @contextmanager
     def for_target(cls, target: Path, spec: Specification):
-        
-        with closing(ZipFile(target, "w", compression=ZIP_LZMA)) as archive:
+
+        with closing(ZipFile(target, "w")) as archive:
             record = []
             bld = WheelBuilder(archive, record)
             yield bld
@@ -49,14 +48,9 @@ class WheelBuilder(object):
             _finalize_whl_metadata(bld, spec)
             record.clear()
 
-        
-
-
     def add_file(self, name: PurePath, data: bytes):
         self._record.append(Record(name, record_hash(data)))
         self._archive.writestr(str(name), data)
-
-    
 
 
 def _finalize_whl_metadata(builder, spec):
@@ -68,7 +62,7 @@ def _finalize_whl_metadata(builder, spec):
         bytes(spec.pyproject_metadata.as_rfc822()),
     )
     builder.add_file(
-        distinfo /"entry_points.txt",
+        distinfo / "entry_points.txt",
         entrypoints_from_spec(spec),
     )
     builder.add_file(
@@ -81,22 +75,27 @@ def _finalize_whl_metadata(builder, spec):
     record.append(Record(record_filename, None))
 
     builder._archive.writestr(
-            str(record_filename), "\n".join(x.as_record() for x in record).encode("utf-8")
-        )
+        str(record_filename), "\n".join(x.as_record() for x in record).encode("utf-8")
+    )
     record.clear()
 
 
 def write_src_to_whl(builder, spec):
-    for folder, dirs, files in walk("src"):
+    src = Path("src")
+    items = sorted(src.glob("**/*"))
 
-        targetfolder = spec.package + folder[3:]
+    package = PurePath(spec.package)
+    print(items)
 
-        for file_name in files:
-            if file_name[-4:] in (".pyc", ".pyo"):
-                continue
-            with open(path.join(folder, file_name)) as fp:
-                content = fp.read()
-            builder.add_file(
-                name=path.join(targetfolder, file_name),
-                data=content,
-            )
+    for item in items:
+        if not item.is_file():
+            continue
+        if item.suffix in (".pyc", ".pyo"):
+            continue
+
+        target = package.joinpath(item.relative_to(src))
+
+        builder.add_file(
+            name=target,
+            data=item.read_bytes(),
+        )

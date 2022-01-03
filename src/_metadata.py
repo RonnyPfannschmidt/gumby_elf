@@ -20,13 +20,15 @@ class Specification:
     def package(self):
         return self.toml_data["tool"]["gumby_elf"]["package-name"]
 
-
     @classmethod
     def from_project_dir(cls):
         source_file = Path("pyproject.toml")
         toml_data = tomli.loads(source_file.read_text())
-        return Specification(source_file=source_file, toml_data=toml_data, pyproject_metadata=StandardMetadata.from_pyproject(toml_data))
-
+        return Specification(
+            source_file=source_file,
+            toml_data=toml_data,
+            pyproject_metadata=StandardMetadata.from_pyproject(toml_data),
+        )
 
 
 def get_wheel_info(
@@ -44,22 +46,27 @@ def get_wheel_info(
         ]
     ).encode("utf-8")
 
+
 def entrypoints_from_spec(spec: Specification):
     return entrypoints_txt(spec.pyproject_metadata)
 
+
 def entrypoints_txt(metadata) -> bytes:
     data = metadata.entrypoints.copy()
-    data.update({
-        'console_scripts': metadata.scripts,
-        'gui_scripts': metadata.gui_scripts,
-    })
+    data.update(
+        {
+            "console_scripts": metadata.scripts,
+            "gui_scripts": metadata.gui_scripts,
+        }
+    )
 
     def entries():
         for entrypoint, items in data.items():
             if not items:
                 continue
-            yield f'[{entrypoint}]\n'
+            yield f"[{entrypoint}]\n"
             for name, target in items.items():
-                yield f'{name} = {target}\n'
+                yield f"{name} = {target}\n"
             yield "\n"
+
     return "".join(entries()).encode()

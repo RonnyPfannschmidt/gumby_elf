@@ -15,7 +15,7 @@ def develop_version(version):
 
 
 def build_wheel(spec, distdir):
-    target_filename = wheel_name(distdir, spec, version=spec.version)
+    target_filename = wheel_name(distdir, spec)
     with WheelBuilder.for_target(target_filename, spec) as bld:
         write_src_to_whl(bld, spec)
     return target_filename
@@ -31,7 +31,10 @@ def bootstraper(spec):
 
 def build_editable(spec, distdir):
     spec.version = develop_version(spec.version)
-    target_filename = wheel_name(distdir, spec, )
+    target_filename = wheel_name(
+        distdir,
+        spec,
+    )
     with WheelBuilder.for_target(target_filename, spec) as bld:
         bld.add_file(
             name=spec.package + ".py",
