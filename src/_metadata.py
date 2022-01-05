@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any
 
 import tomli
+from packaging.version import Version
 from pep621 import StandardMetadata
 
 
@@ -21,6 +22,16 @@ class Specification:
     @property
     def package(self) -> str:
         return self.toml_data["tool"]["gumby_elf"]["package-name"]
+
+    @property
+    def version(self) -> Version:
+        return self.pyproject_metadata.version
+
+    @version.setter
+    def version(self, new_value: Version | str) -> Version:
+        if not isinstance(new_value, Version):
+            new_value = Version(new_value)
+        self.pyproject_metadata.version = new_value
 
     @classmethod
     def from_project_dir(

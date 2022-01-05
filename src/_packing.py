@@ -1,12 +1,14 @@
 import os.path
 import pkgutil
+from pathlib import Path
 
+from ._metadata import Specification
 from ._mkwheel import wheel_name
 from ._mkwheel import WheelBuilder
 from ._mkwheel import write_src_to_whl
 
 
-def build_wheel(spec, distdir):
+def build_wheel(spec: Specification, distdir: Path):
     target_filename = wheel_name(distdir, spec)
     with WheelBuilder.for_target(target_filename, spec) as bld:
         write_src_to_whl(bld, spec)
@@ -32,3 +34,7 @@ def build_editable(spec, distdir):
             data=bootstraper(spec),
         )
     return target_filename
+
+
+def build_sdist(spec: Specification, sdist_dir: Path):
+    ...
