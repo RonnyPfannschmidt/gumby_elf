@@ -6,11 +6,6 @@ from ._mkwheel import WheelBuilder
 from ._mkwheel import write_src_to_whl
 
 
-def develop_version(version):
-    spec_char = "." if "+" in version else "+"
-    return version + spec_char + "gumby.develop"
-
-
 def build_wheel(spec, distdir):
     target_filename = wheel_name(distdir, spec)
     with WheelBuilder.for_target(target_filename, spec) as bld:
@@ -27,7 +22,6 @@ def bootstraper(spec):
 
 
 def build_editable(spec, distdir):
-    spec.version = develop_version(spec.version)
     target_filename = wheel_name(
         distdir,
         spec,

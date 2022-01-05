@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from base64 import urlsafe_b64encode
 from contextlib import closing
 from contextlib import contextmanager
@@ -5,9 +7,8 @@ from dataclasses import dataclass
 from hashlib import sha1
 from pathlib import Path
 from pathlib import PurePath
-from typing import List
+from typing import Generator
 from typing import NamedTuple
-from typing import Optional
 from zipfile import ZipFile
 
 from ._metadata import entrypoints_from_spec
@@ -31,7 +32,7 @@ def record_hash(data: bytes) -> str:
 
 class Record(NamedTuple):
     path: PurePath
-    hash: Optional[str]
+    hash: str | None
 
     def as_record(self):
         return f"{self.path}, {self.hash or ''}"
@@ -40,14 +41,16 @@ class Record(NamedTuple):
 @dataclass
 class WheelBuilder:
     _archive: ZipFile
-    _record: List[Record]
+    _record: list[Record]
 
     @classmethod
     @contextmanager
-    def for_target(cls, target: Path, spec: Specification):
+    def for_target(
+        cls, target: Path, spec: Specification
+    ) -> Generator[WheelBuilder, None, None]:
 
         with closing(ZipFile(target, "w")) as archive:
-            record: List[Record] = []
+            record: list[Record] = []
             bld = WheelBuilder(archive, record)
             yield bld
 

@@ -1,8 +1,8 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
-from typing import Dict
-from typing import Sequence
 
 import tomli
 from pep621 import StandardMetadata
@@ -11,20 +11,21 @@ from pep621 import StandardMetadata
 @dataclass
 class Specification:
     source_file: Path
-    toml_data: Dict["str", Any]
+    toml_data: dict[str, Any]
     pyproject_metadata: StandardMetadata
 
     @property
-    def name(self):
+    def name(self) -> str:
         return self.pyproject_metadata.name
 
     @property
-    def package(self):
+    def package(self) -> str:
         return self.toml_data["tool"]["gumby_elf"]["package-name"]
 
     @classmethod
-    def from_project_dir(cls):
-        source_file = Path("pyproject.toml")
+    def from_project_dir(
+        cls, source_file: Path = Path("pyproject.toml")
+    ) -> Specification:
         toml_data = tomli.loads(source_file.read_text())
         return Specification(
             source_file=source_file,
@@ -35,7 +36,7 @@ class Specification:
 
 def get_wheel_info(
     wheel_version: str = "1.0",
-    tags: Sequence[str] = ("py3-none-any",),
+    tags: tuple[str, ...] = ("py3-none-any",),
     root_purelib: bool = True,
 ) -> bytes:
 
