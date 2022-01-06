@@ -3,6 +3,8 @@ import pkgutil
 from pathlib import Path
 
 from ._metadata import Specification
+from ._mksdist import sdist_path
+from ._mksdist import SdistBuilder
 from ._mkwheel import wheel_name
 from ._mkwheel import WheelBuilder
 from ._mkwheel import write_src_to_whl
@@ -36,5 +38,14 @@ def build_editable(spec, distdir):
     return target_filename
 
 
-def build_sdist(spec: Specification, sdist_dir: Path):
-    ...
+def build_sdist(spec: Specification, sdist_dir: Path) -> Path:
+    target = sdist_path(sdist_dir, spec)
+    with SdistBuilder.for_target(target, spec) as sdist:
+        # todo: better config
+
+        from setuptools_scm.integration import find_files
+
+        for name in find_files(""):
+            with open(name, "rb") as fp:
+                sdist.add_file(name, fp.read())
+    return target

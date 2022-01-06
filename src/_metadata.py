@@ -32,6 +32,8 @@ class Specification:
         if not isinstance(new_value, Version):
             new_value = Version(new_value)
         self.pyproject_metadata.version = new_value
+        if "version" in self.pyproject_metadata.dynamic:
+            self.pyproject_metadata.dynamic.remove("version")
 
     @classmethod
     def from_project_dir(
