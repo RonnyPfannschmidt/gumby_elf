@@ -92,7 +92,6 @@ def write_src_to_whl(builder, spec):
     items = sorted(src.glob("**/*"))
 
     package = PurePath(spec.package)
-    print(items)
 
     for item in items:
         if not item.is_file():
