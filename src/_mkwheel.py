@@ -64,8 +64,6 @@ class WheelBuilder:
 
 def _finalize_whl_metadata(builder, spec: Specification):
     distinfo = Path(DISTINFO_FMT.format(spec=spec))
-    spec.pyproject_metadata.version = spec.version
-    spec.pyproject_metadata.dynamic.remove("version")
     builder.add_file(
         distinfo / "METADATA",
         bytes(spec.pyproject_metadata.as_rfc822()),
