@@ -37,6 +37,7 @@ dependencies = [
 ]
 [project.optional-dependencies]
 test = ["pytest"]
+docs = ["sphinx>=3.5", "myst-parser>=0.16"]
 
 [[project.authors]]
 name = "Ronny Pfannschmidt"
