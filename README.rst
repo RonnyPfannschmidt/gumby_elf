@@ -1,3 +1,11 @@
+
+DEPRECATED!
+
+im now using hatch
+
+see https://hatch.pypa.io/latest/
+
+
 Gumby Elf
 =========
 
