@@ -6,7 +6,6 @@ will do a devleop install of gumby elf
 import sys
 import types
 
-
 mod = types.ModuleType("gumby_elf")
 sys.modules[mod.__name__] = mod
 mod.__path__ = ["src"]  # type: ignore
