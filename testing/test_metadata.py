@@ -1,6 +1,5 @@
 from gumby_elf import _metadata as metadata
 
-
 WHEEL_DEFAULT_META = """\
 Wheel-Version: 1.0
 Generator: gumby_elf pre alpha
