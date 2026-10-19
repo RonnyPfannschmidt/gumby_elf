@@ -15,7 +15,6 @@ from ._metadata import entrypoints_from_spec
 from ._metadata import get_wheel_info
 from ._metadata import Specification
 
-
 WHEEL_FMT = "{spec.name}-{spec.version}-py3-none-any.whl"
 DISTINFO_FMT = "{spec.name}-{spec.version}.dist-info"
 
@@ -47,7 +46,7 @@ class WheelBuilder:
     @contextmanager
     def for_target(
         cls, target: Path, spec: Specification
-    ) -> Generator[WheelBuilder, None, None]:
+    ) -> Generator[WheelBuilder]:
 
         with closing(ZipFile(target, "w")) as archive:
             record: list[Record] = []
